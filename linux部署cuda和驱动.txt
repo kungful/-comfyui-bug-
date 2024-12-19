@@ -1,0 +1,29 @@
+禁用开源驱动
+sudo nano /etc/modprobe.d/blacklist.conf
+在末尾添加以下代码
+blacklist nouveau
+options nouveau modeset=0
+
+更新initramfs
+sudo update-initramfs -u
+sudo reboot
+
+gcc是cuda的编译工具，cuda12.4版本需要gcc7.0以上
+如果出现报错不兼容>7.0的gcc，那就强制安装进行匹配显卡驱动
+
+chmod +x cuda_12.4.1_535.54.03_linux.run
+强制安装忽略gcc版本报错
+sudo ./cuda_12.4.1_535.54.03_linux.run --override
+
+cuda安装后添加永久环境变量
+在nano ~/.zshrc  末尾添加以下代码
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+ctrl+o保存 ctrl+x退出
+
+开启多个终端检查
+nvcc --version
+nvidia-smi
+
+
+cuda强制装好后可以再升级驱动
